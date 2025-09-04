@@ -1,0 +1,21 @@
+syntax = "proto3";
+option csharp_namespace = "Stocklify.MarketStockValueGenerator.Services.Grpc";
+import "google/protobuf/empty.proto";
+
+package com.stocklify;
+
+service StockValueService {
+  rpc SubscribeToChanges (google.protobuf.Empty) returns (stream Stock);
+
+  rpc GetStocks (google.protobuf.Empty) returns (Stocks);
+}
+
+message Stocks {
+  repeated Stock stocks = 1;
+}
+
+message Stock {
+  int32 stockId = 1;
+  double value = 2;
+  int64 timestamp = 3;
+}

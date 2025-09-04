@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "Stocklify.MarketStockValueGenerator": {
+      "commandName": "Project",
+      "applicationUrl": "https://localhost:5001",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development",
+        "Application__BroadcastCapacity": "10",
+        "Application__NumberOfStocksInMarket": "100",
+        "Application__MinChangeRate": "10",
+        "Application__MaxChangeRate": "20"
+      }
+    }
+  }
+}
