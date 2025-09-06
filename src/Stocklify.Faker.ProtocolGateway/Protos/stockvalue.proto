@@ -1,5 +1,5 @@
 syntax = "proto3";
-option csharp_namespace = "Stocklify.MarketStockValueGenerator.Services.Grpc";
+option csharp_namespace = "Stocklify.Faker.Services.Grpc";
 import "google/protobuf/empty.proto";
 
 package com.stocklify;

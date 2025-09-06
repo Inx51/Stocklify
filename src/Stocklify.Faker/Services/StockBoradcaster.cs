@@ -1,10 +1,9 @@
 using System.Collections.Concurrent;
+using System.Diagnostics.Metrics;
 using System.Threading.Channels;
-using Microsoft.Extensions.Options;
-using Stocklify.StockFakeValueGenerator.Options;
-using Stocklify.StockFakeValueGenerator.ValueObjects;
+using Stocklify.Faker.ValueObjects;
 
-namespace Stocklify.StockFakeValueGenerator.Services;
+namespace Stocklify.Faker.Services;
 
 public class StockBroadcaster
 {
@@ -12,12 +11,19 @@ public class StockBroadcaster
     private readonly ConcurrentDictionary<Channel<Stock>, byte> _channels = new();
     
     private readonly int _maxCapacity;
+    private readonly Gauge<double> _stockValuesGauge;
     private readonly ILogger<StockBroadcaster> _logger;
     
-    public StockBroadcaster(IOptions<ApplicationOptions> options, ILogger<StockBroadcaster> logger)
+    public StockBroadcaster
+    (
+        int maxCapacity, 
+        Meter meter,
+        ILogger<StockBroadcaster> logger
+    )
     {
-        _maxCapacity = options.Value.BroadcastCapacity;
+        _maxCapacity = maxCapacity;
         _logger = logger;
+        _stockValuesGauge = meter.CreateGauge<double>("stock.charts");
     }
     
     public Channel<Stock> Subscribe()
@@ -44,6 +50,7 @@ public class StockBroadcaster
         {
             if(!_items.TryDequeue(out var item))
                 _logger.LogError("Failed to dequeue item from queue.");
+            _stockValuesGauge.Record(item.Value, new KeyValuePair<string, object?>("id", item.Id));
             foreach(var channel in _channels.Keys)
             {
                 channel.Writer.TryWrite(item);

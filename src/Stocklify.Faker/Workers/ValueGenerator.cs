@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Options;
-using Stocklify.StockFakeValueGenerator.Options;
-using Stocklify.StockFakeValueGenerator.Services;
+using Stocklify.Faker.Options;
+using Stocklify.Faker.Services;
 
-namespace Stocklify.StockFakeValueGenerator.Workers;
+namespace Stocklify.Faker.Workers;
 
 public class ValueGenerator : BackgroundService
 {
@@ -18,14 +18,15 @@ public class ValueGenerator : BackgroundService
     (
         StockBroadcaster stockBroadcaster,
         StockContext stockContext,
-        IOptions<ApplicationOptions> options,
+        int minChangeRate,
+        int maxChangeRate,
         ILogger<ValueGenerator> logger
     )
     {
         _stockBroadcaster = stockBroadcaster;
         _stockContext = stockContext;
-        _minChangeRate = options.Value.MinChangeRate;
-        _maxChangeRate = options.Value.MaxChangeRate;
+        _minChangeRate = minChangeRate;
+        _maxChangeRate = maxChangeRate;
         _logger = logger;
     }
     
@@ -59,12 +60,12 @@ public class ValueGenerator : BackgroundService
     private async Task UpdateRandomStockValueChange(int i)
     {
         //...and then change it randomly.
-        var changeHappened = GetRandomValueInRange(0.0, 2) > 1.6;
+        var changeHappened = GetRandomValueInRange(0.0, 1) > 0.95;
         if (!changeHappened)
             return;
 
         //Calculate the base-change of value for the stock.
-        var change = GetRandomValueInRange(-0.2, 1.1);
+        var change = GetRandomValueInRange(-2.0, 2.0);
         var changeShouldMultiply = GetRandomValueInRange(0.0, 10.0) > 8;
         if (changeShouldMultiply)
         {
@@ -102,6 +103,7 @@ public class ValueGenerator : BackgroundService
         
         //Re-enable dropping stock changes if the channel is no longer full.
         _droppingStockChanges = false;
-        _stockBroadcaster.Broadcast(ref _stockContext.Get(index));
+        var stock = _stockContext.Get(index);
+        _stockBroadcaster.Broadcast(ref stock);
     }
 }

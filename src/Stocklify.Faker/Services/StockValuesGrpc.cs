@@ -1,8 +1,8 @@
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using Stocklify.StockFakeValueGenerator.Services.Grpc;
+using Stocklify.Faker.Services.Grpc;
 
-namespace Stocklify.StockFakeValueGenerator.Services;
+namespace Stocklify.Faker.Services;
 
 public class StockValuesGrpc : StockValueService.StockValueServiceBase
 {

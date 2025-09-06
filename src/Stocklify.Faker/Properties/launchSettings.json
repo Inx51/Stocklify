@@ -6,7 +6,7 @@
       "applicationUrl": "https://localhost:5001",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development",
-        "Application__BroadcastCapacity": "10",
+        "Application__Capacity": "10",
         "Application__NumberOfStocksInMarket": "100",
         "Application__MinChangeRate": "10",
         "Application__MaxChangeRate": "20"

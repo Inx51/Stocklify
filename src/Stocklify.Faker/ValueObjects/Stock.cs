@@ -1,4 +1,4 @@
-namespace Stocklify.StockFakeValueGenerator.ValueObjects;
+namespace Stocklify.Faker.ValueObjects;
 
 public struct Stock
 {

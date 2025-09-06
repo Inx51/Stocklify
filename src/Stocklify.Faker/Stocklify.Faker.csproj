@@ -12,10 +12,20 @@
       <PackageReference Include="Grpc.AspNetCore" Version="2.71.0" />
       <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.71.0" />
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.8" />
+      <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.12.0" />
+      <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.12.0" />
+      <PackageReference Include="OpenTelemetry.Instrumentation.GrpcCore" Version="1.0.0-beta.6" />
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\stockvalue.proto" GrpcServices="Server" />
+      <Protobuf Include="Protos\stockvalue.proto">
+        <GrpcServices>Server</GrpcServices>
+        <Access>Public</Access>
+        <ProtoCompile>True</ProtoCompile>
+        <CompileOutputs>True</CompileOutputs>
+        <OutputDir>obj\Debug\net9.0\</OutputDir>
+        <Generator>MSBuild:Compile</Generator>
+      </Protobuf>
     </ItemGroup>
 
 </Project>

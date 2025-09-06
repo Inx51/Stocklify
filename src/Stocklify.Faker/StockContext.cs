@@ -1,19 +1,18 @@
-using Microsoft.Extensions.Options;
-using Stocklify.StockFakeValueGenerator.Options;
-using Stocklify.StockFakeValueGenerator.ValueObjects;
+using System.Diagnostics.Metrics;
+using Stocklify.Faker.ValueObjects;
 
-namespace Stocklify.StockFakeValueGenerator;
+namespace Stocklify.Faker;
 
 public class StockContext
 {
     public int NumOfStocks { get; private set; }
     
     private readonly Stock[] _stocks;
-
-    public StockContext(IOptions<ApplicationOptions> options)
+    
+    public StockContext(int numberOfStocksInMarket, Meter meter)
     {
-        _stocks = new Stock[options.Value.NumberOfStocksInMarket];
-        NumOfStocks = options.Value.NumberOfStocksInMarket;
+        _stocks = new Stock[numberOfStocksInMarket];
+        NumOfStocks = numberOfStocksInMarket;
     }
 
     public void Create(int id, long timestamp, double value)
