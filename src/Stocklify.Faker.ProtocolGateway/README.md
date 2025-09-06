@@ -2,7 +2,7 @@
 
 ---
 
-Generates fake stock values and changes for driving realtime stock market fake applications.
+Acts as a gateway of the Faker gRPC service and other protocols.
 
 # SignalR Hubs
 ## /hub/stockValueServiceHub
