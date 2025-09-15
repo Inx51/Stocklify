@@ -4,36 +4,32 @@ import './StockCard.css';
 import { BriefcaseIcon, EyeIcon, ScaleIcon } from '@heroicons/react/24/outline'
 import { BriefcaseIcon as BriefcaseIconSolid, EyeIcon as EyeIconSolid, ScaleIcon as ScaleIconSolid } from '@heroicons/react/24/solid'
 import { useStockService } from '../../contexts/StockContext';
+import { Stock } from '../../types/Stock';
 
-function StockCard({ stockId }: { stockId: number }) {
+function StockCard({ stock }: { stock: Stock }) {
+
+    const startPrice = stock.value;
+    const [price, setPrice] = useState<number>(0);
+    const [changePercentage, setChangePercentage] = useState<number>(0);
+    const [symbol, setSymbol] = useState<string>("");
 
     const stockService = useStockService();
 
-    const stock = stockService!.stocks![`${stockId}`];
-
-    const [symbol, setSymbol] = useState("XXX");
-    const [price, setPrice] = useState(0);
-    const [changePercentage, setChangePercentage] = useState(0);
-    const [startPrice, setStartPrice] = useState<number>(() => stock.value);
-
-    useEffect(() => {
-        setStartPrice(stock.value);
-    }, [stockId]);
-
     useEffect(() => {
         setPrice(stock.value);
-        setChangePercentage((stock.value / startPrice) - 1);
-    }, [stock.value, startPrice]);
+        setChangePercentage(stock.value / startPrice -1);
+        setSymbol("XXXXXX");
 
-    useEffect(() => {
-        // Fetch symbol based on stockId, here we use a placeholder
-        setSymbol(`STK${stockId}`);
-    }, [stockId]);
-
+        stockService!.subscribe(stock.stockId, (value: number) => {
+            setPrice(value);
+            setChangePercentage(value / startPrice -1);
+        });
+    },[stockService]);
 
     return (
         <div>
             <div className="stock-card" tabIndex={0}>
+                {/* <h2>{stockId}</h2> */}
                 <div className="flex">
                     <div className="flex-1 text-gray-300 font-semibold">
                         {symbol}
