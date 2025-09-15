@@ -8,21 +8,23 @@ namespace Stocklify.Faker.ProtocolGateway.SingalR;
 public class StockValueServiceHub : Hub
 {
     private readonly StockValueService.StockValueServiceClient _stockValueServiceClient;
+    private readonly IHubContext<StockValueServiceHub> _hubContext;
 
     private static readonly HashSet<string> Subscribers = new();
     private static readonly Lock Lock = new ();
     private static readonly string SubscribesToChangesGroup = "SubscribesToChanges";
     private static CancellationTokenSource? _subscriptionControlFlowCancellationTokenSource;
     
-    public StockValueServiceHub(StockValueService.StockValueServiceClient stockValueServiceClient)
+    public StockValueServiceHub(StockValueService.StockValueServiceClient stockValueServiceClient, IHubContext<StockValueServiceHub> hubContext)
     {
         _stockValueServiceClient = stockValueServiceClient;
+        _hubContext = hubContext;
     }
     
-    public async Task GetStocksAsync()
+    public async Task<Stocks> GetStocksAsync()
     {
         var stocks = await _stockValueServiceClient.GetStocksAsync(new Empty());
-        await Clients.Caller.SendAsync("getStocks", stocks);
+        return stocks;
     }
     
     public async Task SubscribeToChangesAsync()
@@ -46,7 +48,10 @@ public class StockValueServiceHub : Hub
         using var call = _stockValueServiceClient.SubscribeToChanges(new Empty(), cancellationToken: cancellationToken);
         await foreach (var stock in call.ResponseStream.ReadAllAsync(cancellationToken))
         {
-            await Clients.Group(SubscribesToChangesGroup).SendAsync("subscribeToChanges", stock, cancellationToken);
+            if (cancellationToken.IsCancellationRequested)
+                break;
+            
+            await _hubContext.Clients.Group(SubscribesToChangesGroup).SendAsync("subscribeToChanges", stock, cancellationToken);
         }
     }
 

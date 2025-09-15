@@ -1,0 +1,42 @@
+.stock-card {
+    height: 165px;
+    background-color: hsl(222, 28%, 7%);
+    border: 1px solid hsl(222, 21%, 12%);
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.stock-change-label {
+    padding: 2px 12px;
+    border-radius: 15px;
+    margin-left: 20px;
+}
+
+.stock-change-label-negative {
+    background-color: hsl(345, 35%, 13%);
+    color: hsl(0, 72%, 56%);
+}
+
+.stock-change-label-positive {
+    background-color: hsl(164, 50%, 12%);
+    color: hsl(152, 81%, 37%);
+}
+
+.fake-graph {
+    position: relative;
+    height: 40px;
+}
+
+.graph-negative {
+    position: relative;
+    height: 40px;
+    border-top: solid 2px hsl(0, 72%, 56%);
+    background-image: linear-gradient(hsl(352, 36%, 16%), hsl(227, 24%, 7%));
+}
+
+.graph-positive {
+    position: relative;
+    height: 40px;
+    border-top: solid 2px hsl(152, 81%, 37%);
+    background-image: linear-gradient(hsl(164, 50%, 12%), hsl(227, 24%, 7%));
+}

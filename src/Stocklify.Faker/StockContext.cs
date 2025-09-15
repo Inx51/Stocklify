@@ -27,10 +27,10 @@ public class StockContext
         _stocks[id] = stock;
     }
 
-    public void Update(int id, long timestamp, double value)
+    public void Update(int id, long timestamp, double change)
     {
         _stocks[id].Timestamp = timestamp;
-        _stocks[id].Value += value;
+        _stocks[id].Value += change;
         //Let´s not allow negative stock values.
         if(_stocks[id].Value < 0)
             _stocks[id].Value = 0;

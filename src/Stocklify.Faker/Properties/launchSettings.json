@@ -7,7 +7,7 @@
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development",
         "Application__Capacity": "10",
-        "Application__NumberOfStocksInMarket": "100",
+        "Application__NumberOfStocksInMarket": "20",
         "Application__MinChangeRate": "10",
         "Application__MaxChangeRate": "20"
       }

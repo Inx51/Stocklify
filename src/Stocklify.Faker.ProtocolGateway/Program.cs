@@ -14,9 +14,13 @@ builder.Services.AddOpenApi();
 builder.Services.AddSignalR();
 builder.Services.AddStockValueServiceGrpcClient();
 builder.Services.AddHttpHandlers();
+//In a production scenario, you would want to be more restrictive here.
+const string corsPolicyName = "allow-dev-cors";
+builder.Services.AddCors(o => o.AddPolicy(corsPolicyName, policy => policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials()));
 
 var app = builder.Build();
 
+app.UseCors(corsPolicyName);
 app.MapScalarApiReference();
 app.MapOpenApi();
 app.UseHttpsRedirection();

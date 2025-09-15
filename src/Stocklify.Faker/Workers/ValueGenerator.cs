@@ -74,7 +74,7 @@ public class ValueGenerator : BackgroundService
             change *= changeMultiplier;
         }
 
-        _stockContext.Update(i, timestamp: DateTime.UtcNow.Ticks, value: change);
+        _stockContext.Update(i, timestamp: DateTime.UtcNow.Ticks, change: change);
         await BroadcastAsync(i);
     }
 

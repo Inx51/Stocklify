@@ -1,0 +1,26 @@
+.button {
+    border: 1px solid hsl(222, 21%, 12%);
+    border-radius: 8px;
+    background-color: hsl(222, 28%, 7%);
+}
+
+.button-active {
+    background-color:hsl(222, 21%, 23%) !important;
+}
+
+.button-hover {
+    background-color: hsl(222, 21%, 12%);
+    cursor: pointer;
+}
+
+.icon {
+    color: hsl(221, 16%, 43%);
+}
+
+.button-hover .icon {
+    color: hsl(221, 16%, 80%);
+}
+
+.button-active .icon {
+    color: hsl(221, 16%, 80%);
+}
