@@ -9,7 +9,7 @@ export function StockProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         const connection = new signalR.HubConnectionBuilder()
-            .withUrl("https://localhost:7155/hub/stockValueServiceHub")
+            .withUrl("http://localhost:8085/hub/stockValueServiceHub")
             .withAutomaticReconnect()
             .build();
 

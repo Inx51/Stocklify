@@ -1,0 +1,21 @@
+services:
+  faker:
+    build: ./Stocklify.Faker
+    container_name: stocklify-faker
+    environment:
+      Application__Capacity: 10
+      Application__NumberOfStocksInMarket: 20
+      Application__MinChangeRate: 10
+      Application__MaxChangeRate: 20
+      ASPNETCORE_URLS: http://+:8080
+      Kestrel__EndpointDefaults__Protocols: Http2
+    ports:
+      - "8080:8080"
+  faker-protocolgateway:
+    build: ./Stocklify.Faker.ProtocolGateway
+    container_name: stocklify-faker-protocolgateway
+    environment:
+      Application__StockValueServiceClientEndpoint: http://stocklify-faker:8080
+      ASPNETCORE_URLS: http://+:8080
+    ports:
+      - "8085:8080"
