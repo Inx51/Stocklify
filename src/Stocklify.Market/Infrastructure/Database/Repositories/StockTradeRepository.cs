@@ -36,7 +36,7 @@ public class StockTradeRepository
     
     public async Task<bool> ExistsAsync()
     {
-        var response = await _questDbHttpClient.ExecuteAsync("SELECT TOP 1 TABLE trades");
+        var response = await _questDbHttpClient.ExecuteAsync("SELECT * FROM trades LIMIT 1");
         return response.IsSuccessStatusCode;
     }
 }

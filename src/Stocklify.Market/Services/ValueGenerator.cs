@@ -19,15 +19,15 @@ public class ValueGenerator
 
     private double GetChange()
     {
-        var changeHappened = _randomGenerator.GetRandomDoubleValueInRange(0.0, 1) > 0.7;
+        var changeHappened = _randomGenerator.GetRandomDoubleValueInRange(0.0, 1) > 0.4;
         if (!changeHappened)
             return 0;
 
-        var change = _randomGenerator.GetRandomDoubleValueInRange(-2, 2);
-        var changeShouldMultiply = _randomGenerator.GetRandomDoubleValueInRange(0.0, 10.0) > 8;
+        var change = _randomGenerator.GetRandomDoubleValueInRange(-3, 3);
+        var changeShouldMultiply = _randomGenerator.GetRandomDoubleValueInRange(0.0, 10.0) > 7;
         if (changeShouldMultiply)
         {
-            var changeMultiplier = _randomGenerator.GetRandomDoubleValueInRange(0.1, 4.0);
+            var changeMultiplier = _randomGenerator.GetRandomDoubleValueInRange(0.5, 4.0);
             change *= changeMultiplier;
         }
 
