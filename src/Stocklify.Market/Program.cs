@@ -17,11 +17,11 @@ builder.Services.AddSingleton<RandomGenerator>();
 builder.Services.AddSingleton<ISenderV2>(_ =>  Sender.New("tcp::addr=localhost:9009"));
 builder.Services.AddSingleton<StockTradeRepository>();
 builder.Services.AddSingleton<TimeSeriesUnitOfWork>();
-
 builder.Services.AddHttpClient<QuestDbHttpClient>(client =>
 {
     client.BaseAddress = new Uri("http://localhost:9000");
 });
+builder.Services.AddSignalR();
 
 builder.Services.AddHostedService<Worker>();
 
