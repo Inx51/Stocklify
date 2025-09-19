@@ -14,7 +14,11 @@ public class ValueGenerator
     
     public double GenerateNextValue(double currentValue)
     {
-        return currentValue + GetChange();;
+        var result = currentValue + GetChange();
+        if (result < 0)
+            return 0;
+
+        return result;
     }
 
     private double GetChange()

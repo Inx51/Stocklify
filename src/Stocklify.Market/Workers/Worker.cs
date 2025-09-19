@@ -32,27 +32,8 @@ public class Worker : BackgroundService
     {
         await CleanupAsync();
         GenerateStocks();
-        // SeedStockValues();
         StartValueGenerationTick(stoppingToken);
         PersistChangesTick(stoppingToken);
-    }
-
-    private void SeedStockValues()
-    {
-        foreach (var stock in _stocks)
-        {
-            var numOfInitValues = 30_0000 / _tickInterval;
-            for (var i = 0; i < numOfInitValues; i++)
-            {
-                double value;
-                if(stock.Value == 0)
-                    value = _valueGenerator.GenerateRandomValue(1, 300);
-                else
-                    value = _valueGenerator.GenerateNextValue(stock.Value);
-                
-                stock.AppendUpdatedValue(value, UnixTimestamp.UtcNowInNanoseconds - (numOfInitValues - i) * _tickInterval * 1_000_000);
-            }
-        }
     }
 
     private async Task CleanupAsync()
