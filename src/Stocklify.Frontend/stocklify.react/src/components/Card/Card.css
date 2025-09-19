@@ -1,0 +1,4 @@
+.card {
+    background-color: var(--stocklify-color-darker-blue);
+    border-color: var(--stocklify-color-dark-blue);
+}

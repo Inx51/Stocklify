@@ -15,9 +15,4 @@
         <PackageReference Include="Aspire.Hosting.NodeJs" Version="9.4.2" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Stocklify.Faker.ProtocolGateway\Stocklify.Faker.ProtocolGateway.csproj" />
-      <ProjectReference Include="..\Stocklify.Faker\Stocklify.Faker.csproj" />
-    </ItemGroup>
-
 </Project>
